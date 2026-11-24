@@ -68,6 +68,7 @@ class MainWindow(QMainWindow):
         self.empty_label = QLabel()
         self.empty_label.setObjectName("empty_label")
         self.empty_label.setMinimumSize(200, 200)
+        self.slider_methode(self.slider.value())
 
         layout = QHBoxLayout()
         layout.addLayout(left_layout)
@@ -85,6 +86,13 @@ class MainWindow(QMainWindow):
 
     def slider_methode(self, value: int) -> None:
         self.slider_number.setValue(value)
+        intensity = min(value, 225) / 225
+        red = round(144 * intensity)
+        green = round(238 * intensity)
+        blue = round(144 * intensity)
+        self.empty_label.setStyleSheet(
+            f"QLabel {{ background-color: rgb({red}, {green}, {blue}); }}"
+        )
 
     def start(self) -> None:
         if self.number.value() >= self.number.maximum():
