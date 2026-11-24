@@ -4,6 +4,7 @@ from PySide6.QtWidgets import (
     QAbstractSpinBox,
     QApplication,
     QHBoxLayout,
+    QLabel,
     QMainWindow,
     QPushButton,
     QSlider,
@@ -27,7 +28,7 @@ class MainWindow(QMainWindow):
         self.number.setReadOnly(True)
         self.number.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.NoButtons)
         self.number.setStyleSheet("QSpinBox { background-color: blue; }")
-
+        
         self.slider = QSlider(Qt.Orientation.Vertical)
         self.slider.setObjectName("slider")
         self.slider.setRange(0, 255)
@@ -64,9 +65,14 @@ class MainWindow(QMainWindow):
         right_layout.addWidget(self.slider)
         right_layout.addWidget(self.slider_number)
 
+        self.empty_label = QLabel()
+        self.empty_label.setObjectName("empty_label")
+        self.empty_label.setMinimumSize(200, 200)
+
         layout = QHBoxLayout()
         layout.addLayout(left_layout)
         layout.addLayout(right_layout)
+        layout.addWidget(self.empty_label)
 
         central_widget = QWidget()
         central_widget.setLayout(layout)
