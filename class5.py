@@ -11,6 +11,8 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+from PySide6.QtCore import QTimer
+
 
 class MainWindow(QMainWindow):
     def __init__(self) -> None:
@@ -23,7 +25,11 @@ class MainWindow(QMainWindow):
         self.number.setRange(0, 10000)
         self.number.setReadOnly(True)
         self.number.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.NoButtons)
-        self.number.setStyleSheet("QSpinBox { background-color: lightgray; }")
+        self.number.setStyleSheet("QSpinBox { background-color: blue; }")
+
+        self.timer = QTimer(self)
+        self.timer.setInterval(500)
+        self.timer.timeout.connect(self.timer_method)
 
         self.start_button = QPushButton("Start")
         self.start_button.setObjectName("start_button")
@@ -46,12 +52,23 @@ class MainWindow(QMainWindow):
         central_widget.setLayout(layout)
         self.setCentralWidget(central_widget)
 
+    def timer_method(self) -> None:
+        self.number.setValue(self.number.value() + 1)
+        if self.number.value() == self.number.maximum():
+            self.stop()
+
     def start(self) -> None:
+        if self.number.value() >= self.number.maximum():
+            return
+        self.timer.start()
         self.start_button.setEnabled(False)
         self.stop_button.setEnabled(True)
 
     def stop(self) -> None:
+        self.timer.stop()
         self.start_button.setEnabled(True)
+        if self.number.value() == self.number.maximum():
+            self.start_button.setEnabled(False)
         self.stop_button.setEnabled(False)
 
 
