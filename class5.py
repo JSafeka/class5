@@ -1,6 +1,7 @@
 import sys
 
 from PySide6.QtWidgets import (
+    QAbstractSpinBox,
     QApplication,
     QHBoxLayout,
     QMainWindow,
@@ -15,10 +16,14 @@ class MainWindow(QMainWindow):
     def __init__(self) -> None:
         super().__init__()
         self.setWindowTitle("Class 5")
+        self.setMinimumWidth(300)
 
         self.number = QSpinBox()
         self.number.setObjectName("number")
         self.number.setRange(0, 10000)
+        self.number.setReadOnly(True)
+        self.number.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.NoButtons)
+        self.number.setStyleSheet("QSpinBox { background-color: lightgray; }")
 
         self.start_button = QPushButton("Start")
         self.start_button.setObjectName("start_button")
